@@ -10,15 +10,15 @@ import Firebase
 
 @main
 struct ShopMeApp: App {
+    @StateObject var mainTabViewModel = MainTabViewModel()
     init(){
         FirebaseApp.configure()
     }
     
     var body: some Scene {
         WindowGroup {
-            NavigationView{
-                ContentView()
-            }
+            ContentView()
+                .environmentObject(mainTabViewModel)
         }
     }
 }

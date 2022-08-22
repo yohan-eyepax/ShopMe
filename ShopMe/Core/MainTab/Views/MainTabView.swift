@@ -8,57 +8,61 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State var selectedIndex = 0
+    @EnvironmentObject var viewModel: MainTabViewModel
     
     init(){
        
     }
     
     var body: some View {
-        TabView(selection: $selectedIndex){
+        TabView(selection: $viewModel.selectedIndex){
             HomeView()
                 .onTapGesture {
-                    self.selectedIndex = 0
-                    print("DEBUG: SELECTED INDEX \(selectedIndex)")
+                    viewModel.selectedIndex = 0
                 }
-                .tabItem {
-                    Label("Home", image: selectedIndex == 0 ? "home-active": "home")
-                }
-                .tag(0)
+                .modifier(TabViewItemModifier(selectedIndex:viewModel.selectedIndex,label: "Home", icon: "home", activeIcon: "home-active", tag: 0))
+                
             
             CategoriesView()
                 .onTapGesture {
-                    self.selectedIndex = 1
-                    print("DEBUG: SELECTED INDEX \(selectedIndex)")
+                    viewModel.selectedIndex = 1
                 }
-                .tabItem {
-                    Label("Categories", image: selectedIndex == 1 ? "categories-active": "categories")
-                }
-                .tag(1)
+                .modifier(TabViewItemModifier(selectedIndex:viewModel.selectedIndex,label: "Categories", icon: "categories", activeIcon: "categories-active", tag: 1))
             
             SearchView()
                 .onTapGesture {
-                    self.selectedIndex = 2
+                    viewModel.selectedIndex = 2
                 }
-                .tabItem {
-                    Label("Search", image: selectedIndex == 2 ? "search-active": "search")
-                }
-                .tag(2)
+                .modifier(TabViewItemModifier(selectedIndex:viewModel.selectedIndex,label: "Search", icon: "search", activeIcon: "search-active", tag: 2))
             
             MyAccountView()
                 .onTapGesture {
-                    self.selectedIndex = 3
+                    viewModel.selectedIndex = 3
                 }
-                .tabItem {
-                    Label("My Account", image: selectedIndex == 3 ? "my-account-active" : "my-account")
-                }
-                .tag(3)
+                .modifier(TabViewItemModifier(selectedIndex:viewModel.selectedIndex,label: "My Account", icon: "my-account", activeIcon: "my-account-active", tag: 3))
         }
+        
     }
 }
 
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
         MainTabView()
+    }
+}
+
+struct TabViewItemModifier: ViewModifier{
+    let selectedIndex: Int
+    let label: String
+    let icon: String
+    let activeIcon: String
+    let tag: Int
+    
+    func body(content: Content) -> some View {
+        content
+        .tabItem {
+            Label(label, image: selectedIndex == tag ? activeIcon: icon)
+        }
+        .tag(tag)
     }
 }
