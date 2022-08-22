@@ -8,8 +8,34 @@
 import SwiftUI
 
 struct HomeView: View {
+    
     var body: some View {
-        Text("Home View")
+        ScrollView{
+            VStack(spacing: 0) {
+                FeaturedBannersSectionView()
+                
+                SeperatorView()
+                
+                HotDealsSectionView()
+                
+                SeperatorView()
+                    .padding(.top)
+                
+                CategorySectionView()
+                
+                SeperatorView()
+                    .padding(.top)
+                
+                FeaturedProductsSectionView()
+                
+                SeperatorView()
+                    .padding(.top)
+                
+                NewProductsSectionView()
+                
+                Spacer()
+            }
+        }
     }
 }
 
